@@ -17,12 +17,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "EMPLOYEE")
+@NamedQuery(name="Employee.ageRange",query="from Employee where age between :ageFrom and :ageTo")
 public class Employee {
 
 	@Id
@@ -78,7 +80,7 @@ public class Employee {
 	 * To get a meaning full name @JoinColumn(name="WORK_STATION_ID") is used
 	 *  
 	 */
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@OneToOne
 	@JoinColumn(name="WORK_STATION_ID")
 	private Laptop laptopInformation;
 	
@@ -131,10 +133,6 @@ public class Employee {
 		return salary;
 	}
 
-	public OfficeContactDetails getCcontactDetails() {
-		return contactDetails;
-	}
-
 	public void setEmpId(int empId) {
 		this.empId = empId;
 	}
@@ -155,9 +153,6 @@ public class Employee {
 		this.salary = salary;
 	}
 
-	public void setContactDetails(OfficeContactDetails contactDetails) {
-		this.contactDetails = contactDetails;
-	}
 
 	public Laptop getLaptopInformation() {
 		return laptopInformation;
@@ -177,6 +172,10 @@ public class Employee {
 
 	public OfficeContactDetails getContactDetails() {
 		return contactDetails;
+	}
+
+	public void setContactDetails(OfficeContactDetails contactDetails) {
+		this.contactDetails = contactDetails;
 	}
 
 	public List<Dependents> getDependents() {
